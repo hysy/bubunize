@@ -494,6 +494,8 @@ const JapaneseTextAnalyzer: React.FC = () => {
       .style('font-size', '14px')
       .style('font-weight', 'bold')
       .style('fill', '#fff') // テキストを白色に
+      .style('user-select', 'none') // テキスト選択を無効化
+      .style('pointer-events', 'none') // テキスト要素へのポインターイベントを無効化
       .text(displayRootText);
 
     // レイヤー間隔の調整
@@ -648,6 +650,8 @@ const JapaneseTextAnalyzer: React.FC = () => {
           .attr('dominant-baseline', 'middle')
           .style('font-size', isHomonymReplaced ? '16px' : '13px') // フォントサイズ調整
           .style('fill', (isSelected || isHomonymReplaced) ? COLORS.textLight : COLORS.textDark)
+          .style('user-select', 'none') // テキスト選択を無効化
+          .style('pointer-events', 'none') // テキスト要素へのポインターイベントを無効化
           .text(displayText);
       });
     });
@@ -994,6 +998,29 @@ const JapaneseTextAnalyzer: React.FC = () => {
         .tab-button:hover:not(.active) {
           border-bottom-color: ${THEME.colors.gray[300]};
         }
+        .svg-container svg {
+          user-select: none;
+        }
+        .svg-container text {
+          user-select: none;
+          pointer-events: none;
+        }
+        
+        /* SVGの選択を無効化するスタイル */
+        svg {
+          user-select: none !important;
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+        }
+        
+        svg text {
+          user-select: none !important;
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          pointer-events: none !important;
+        }
       `}</style>
       
       <h1 className="text-2xl font-bold text-center mb-4 text-gray-800 pb-2 border-b-2 border-primary">
@@ -1088,7 +1115,7 @@ const JapaneseTextAnalyzer: React.FC = () => {
         {/* N-gramツリー可視化 */}
         <div className="section-card main-section-card">
           <h2 className="section-header">N-gram ツリー可視化</h2>
-          <div className="border rounded-lg bg-white relative" style={{ height: '400px' }}>
+          <div className="border rounded-lg bg-white relative svg-container" style={{ height: '400px', userSelect: 'none' }}>
             <svg ref={svgRef} width="1200" height="500"></svg>
             
             {/* 同音異義語候補のポップアップ */}
